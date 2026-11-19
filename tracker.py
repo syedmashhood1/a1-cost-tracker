@@ -94,9 +94,9 @@ def call_gemini(prompt: str) -> dict[str, Any]:
 
 def call_groq(prompt: str) -> dict[str, Any]:
     api_key = require_env("GROQ_API_KEY")
-    model = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile").strip()
-    input_price = env_float("GROQ_INPUT_PRICE_PER_M", 0.59)
-    output_price = env_float("GROQ_OUTPUT_PRICE_PER_M", 0.79)
+    model = os.getenv("GROQ_MODEL", "openai/gpt-oss-20b").strip()
+    input_price = env_float("GROQ_INPUT_PRICE_PER_M", 0.075)
+    output_price = env_float("GROQ_OUTPUT_PRICE_PER_M", 0.30)
 
     client = Groq(api_key=api_key)
     started = time.perf_counter()
@@ -185,6 +185,11 @@ def save_results(results: list[dict[str, Any]], path: str = "results.json") -> N
 
 
 def main() -> None:
+    # Windows terminals often default to cp1252; model replies may include Unicode.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="replace")
+
     load_dotenv()
 
     if len(sys.argv) < 2 or not sys.argv[1].strip():

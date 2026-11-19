@@ -35,14 +35,14 @@ The script prints each model’s reply, then a comparison table (provider, input
 Recursion is a technique where a function solves a problem by calling
 itself on a smaller instance of the same problem...
 
-=== GROQ (llama-3.3-70b-versatile) ===
+=== GROQ (openai/gpt-oss-20b) ===
 Recursion means a function invokes itself until it reaches a base case...
 
 === COST COMPARISON ===
 provider | input_tokens | output_tokens | seconds | cost_usd
 ---------+--------------+---------------+---------+-----------
 gemini   | 12           | 148           | 1.842   | 0.00037360
-groq     | 15           | 132           | 0.417   | 0.00011313
+groq     | 15           | 132           | 0.417   | 0.00004073
 
 Saved results.json
 ```
@@ -55,5 +55,5 @@ Calling two providers from one script made it clear that “the same prompt” s
 
 ## Notes
 
-- Prices in `.env.example` follow the public paid-tier list rates for `gemini-2.5-flash` and `llama-3.3-70b-versatile`. Free-tier calls may not bill you, but the arithmetic still uses those rates for the assignment.
+- Prices in `.env.example` follow the public paid-tier list rates for `gemini-2.5-flash` and `openai/gpt-oss-20b` (the Groq model available on this account’s free tier). Free-tier calls may not bill you, but the arithmetic still uses those rates for the assignment.
 - If a key is missing or still a placeholder, the script exits with a clear message instead of crashing mid-request.
